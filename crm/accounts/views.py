@@ -5,6 +5,8 @@ from django.forms import inlineformset_factory
 from .models import *
 # Importing the form class to create form
 from .form import OrderForm
+# Importing the filter class
+from .filters import OrderFilter
 
 # Create your views here.
 def home(request):
@@ -45,7 +47,10 @@ def customer(request, pk):
     # Counting the orders made by the customer
     order_count = orders.count()
 
-    context = {'customer': customer, 'orders': orders, 'order_count': order_count}
+    # Calling the filter class
+    myFilter = OrderFilter(request.GET,queryset=orders)
+
+    context = {'customer': customer, 'orders': orders, 'order_count': order_count, 'myFilter': myFilter}
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request,pk):
