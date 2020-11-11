@@ -17,8 +17,14 @@ from django.conf.urls import url, include
 from django.urls import path
 from django.contrib import admin
 
+# Media files configuration
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('accounts.urls')),
-    # path('products/', include('accounts.urls')),
 ]
+
+# The url root for the media file
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
